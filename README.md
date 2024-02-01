@@ -85,6 +85,12 @@
   <p>Endpoint: http://localhost:8080/api/product/1</p>
 
   <h4>A TENER EN CUENTA: Elimina el producto completamente (NO ES BORRADO LÓGICO).</h4>
+</br>
+<p>Fin Del Manual del usuario.</p>
+</br>
+<p>
+Tecnologías utilizadas: Java 17, Springboot, H2.
+</p>
 </div>
-
-<p>Futuras características: desarrollo del frontend</p>
+</br>
+<p><i>Futuras características: desarrollo del frontend</i></p>
