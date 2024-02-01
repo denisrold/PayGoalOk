@@ -1,11 +1,17 @@
 package PayGoal.demo.Controllers;
 import PayGoal.demo.Entities.Product;
 import PayGoal.demo.Services.ProductServicesImp;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 
 @RestController
@@ -31,12 +37,43 @@ public class ProductController {
        }
     }
     @PostMapping("/api/product")
-    public void registerProduct(@RequestBody Product product){
-        service.registerProduct(product);
+    public ResponseEntity registerProduct(@RequestBody Product product){
+        try{
+            service.registerProduct(product);
+            Map<String, Object> created = new HashMap<>();
+            String createdOk = "Created Product Ok";
+            created.put("Status",createdOk);
+            created.put("Name",product.getName());
+            created.put("Description",product.getDescription());
+            created.put("Price",product.getPrice());
+            created.put("Quantity",product.getQuantity());
+            return ResponseEntity.ok().body(created);
+        }
+        catch(Exception e){
+            String NotNull = "Not Null Values";
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(NotNull);
+        }
     }
-    @PutMapping("/api/product")
-    public void updateProduct(@RequestBody Product product) {
-        service.getProductByIdAndUpdate(product.getId(),product);
+
+    @PutMapping("/api/product/{id}")
+    public ResponseEntity updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        try{
+            service.getProductByIdAndUpdate(id,product);
+            Map<String, Object> updated = new HashMap<>();
+            String updatedOk = "Updated Product Ok";
+            updated.put("Status",updatedOk);
+            updated.put("Name",product.getName());
+            updated.put("Description",product.getDescription());
+            updated.put("Price",product.getPrice());
+            updated.put("Quantity",product.getQuantity());
+            return ResponseEntity.ok().body(updated);
+        }
+        catch(Exception e){
+            String ErrorMessage = "";
+            
+                ErrorMessage += "Not Null Values";
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ErrorMessage);
+        }
     }
 }
 

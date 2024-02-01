@@ -57,14 +57,21 @@ public  class ProductDaoImp implements productDao {
             Product existingProduct = typedQuery.getSingleResult();
 
             if (existingProduct != null) {
-
-                existingProduct.setName(updatedProduct.getName());
-                existingProduct.setDescription(updatedProduct.getDescription());
-                existingProduct.setPrice(updatedProduct.getPrice());
-                existingProduct.setQuantity(updatedProduct.getQuantity());
+                // Actualizar solo si el campo no es nulo en updatedProduct
+                if (updatedProduct.getName() != null) {
+                    existingProduct.setName(updatedProduct.getName());
+                }
+                if (updatedProduct.getDescription() != null) {
+                    existingProduct.setDescription(updatedProduct.getDescription());
+                }
+                if (updatedProduct.getPrice() != null) {
+                    existingProduct.setPrice(updatedProduct.getPrice());
+                }
+                if (String.valueOf(updatedProduct.getQuantity()) != null) {
+                    existingProduct.setQuantity(updatedProduct.getQuantity());
+                }
 
                 entityManager.merge(existingProduct);
-
                 return existingProduct;
             } else {
                 return null;

@@ -1,6 +1,7 @@
 package PayGoal.demo.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -20,6 +21,6 @@ public class Product {
     private String description;
     @NotNull(message = "price cannot be blank")
     private Double price;
-    @NotNull(message = "message cannot be blank")
+    @Digits(integer = 1000000, fraction = 0)
     private int quantity;
 }
