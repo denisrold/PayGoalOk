@@ -62,7 +62,7 @@ Eliminacion y Obtencion de informacion de diversos productos </p>
 <h3>Actualizacion de productos - Requiere ID</h3>
 <p>Metodo PUT Requiere el ID para el endpoint.</p>
 <p>Endpoint: <b>http://localhost:8080/api/product/1</b></p>
-
+<p>Body: JSON</p>
 <div align=start>
 <p>{</p>
   <p>"name":"Producto 1",</p>
