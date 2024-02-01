@@ -86,3 +86,5 @@
 
   <h4>A TENER EN CUENTA: Elimina el producto completamente (NO ES BORRADO LÓGICO).</h4>
 </div>
+
+<p>Futuras características: desarrollo del frontend</p>
