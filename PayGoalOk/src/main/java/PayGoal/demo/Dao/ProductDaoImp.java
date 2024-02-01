@@ -1,10 +1,7 @@
 package PayGoal.demo.Dao;
 
 import PayGoal.demo.Entities.Product;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +32,12 @@ public  class ProductDaoImp implements productDao {
         return entityManager.createQuery(jpqlQuery, Product.class).getResultList();
     }
 
-
+    public Product getProductbyId(Long id){
+        String query = "FROM Product WHERE id = :id";
+        Product existingProduct = entityManager.find(Product.class,id);
+        if(existingProduct != null ){return existingProduct;}
+        else{throw new EntityNotFoundException("Product with ID " + id + " not found");}
+    }
     public void deleteProduct(Long id) {
         Product product = entityManager.find(Product.class,id);
         entityManager.remove(product);
@@ -55,7 +57,7 @@ public  class ProductDaoImp implements productDao {
 
         try {
             Product existingProduct = typedQuery.getSingleResult();
-
+            System.out.println(existingProduct);
             if (existingProduct != null) {
                 // Actualizar solo si el campo no es nulo en updatedProduct
                 if (updatedProduct.getName() != null) {
@@ -74,10 +76,10 @@ public  class ProductDaoImp implements productDao {
                 entityManager.merge(existingProduct);
                 return existingProduct;
             } else {
-                return null;
+                throw new EntityNotFoundException("Product with ID " + id + " not found");
             }
         } catch (NoResultException e) {
-            return null;
+            throw new EntityNotFoundException("Product with ID " + id + " not found");
         }
     }
 }

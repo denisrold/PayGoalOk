@@ -1,17 +1,13 @@
 package PayGoal.demo.Controllers;
 import PayGoal.demo.Entities.Product;
 import PayGoal.demo.Services.ProductServicesImp;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.regex.Pattern;
 
 
 @RestController
@@ -23,6 +19,16 @@ public class ProductController {
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false, defaultValue = "asc") String sortOrder){
         return service.getProducts(sortBy,sortOrder);
+    }
+    @GetMapping("api/product/{id}")
+    public ResponseEntity getAllProducts(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(service.getProductById(id));
+        }
+        catch (Exception e){
+            String NotFound = "Source not found with id: "+ id;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NotFound);
+        }
     }
     @DeleteMapping("/api/product/{id}")
     public ResponseEntity remove(@PathVariable String id){
@@ -50,7 +56,7 @@ public class ProductController {
             return ResponseEntity.ok().body(created);
         }
         catch(Exception e){
-            String NotNull = "Not Null Values";
+            String NotNull = "Not Null Values  / " + e.getMessage();
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(NotNull);
         }
     }
@@ -69,9 +75,7 @@ public class ProductController {
             return ResponseEntity.ok().body(updated);
         }
         catch(Exception e){
-            String ErrorMessage = "";
-            
-                ErrorMessage += "Not Null Values";
+            String ErrorMessage = e.getMessage();
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ErrorMessage);
         }
     }

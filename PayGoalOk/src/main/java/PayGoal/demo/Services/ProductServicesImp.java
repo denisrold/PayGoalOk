@@ -24,6 +24,12 @@ public class ProductServicesImp implements productServices{
     public void registerProduct(Product product) {
     productDaoImp.registerProduct(product);
     }
+
+    @Override
+    public Product getProductById(Long id) {
+       return productDaoImp.getProductbyId(id);
+    }
+
     @Override
     public Product getProductByIdAndUpdate(Long id, Product updatedProduct) {
         return productDaoImp.getProductByIdAndUpdate(id,updatedProduct);
