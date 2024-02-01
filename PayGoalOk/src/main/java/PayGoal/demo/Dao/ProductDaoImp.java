@@ -6,10 +6,8 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository
@@ -28,8 +26,6 @@ public  class ProductDaoImp implements productDao {
             } else {
                 jpqlQuery += " p." + sortBy;
             }
-
-            // Agrega el orden (ASC o DESC) a la consulta
             if ("desc".equalsIgnoreCase(sortOrder)) {
                 jpqlQuery += " DESC";
             } else {
@@ -43,6 +39,7 @@ public  class ProductDaoImp implements productDao {
     public void deleteProduct(Long id) {
         Product product = entityManager.find(Product.class,id);
         entityManager.remove(product);
+
     }
 
 

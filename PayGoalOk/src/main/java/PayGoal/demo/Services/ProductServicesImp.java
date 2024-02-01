@@ -4,9 +4,7 @@ import PayGoal.demo.Dao.ProductDaoImp;
 import PayGoal.demo.Entities.Product;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 @Service

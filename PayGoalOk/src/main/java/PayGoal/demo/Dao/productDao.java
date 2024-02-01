@@ -1,9 +1,6 @@
 package PayGoal.demo.Dao;
 
 import PayGoal.demo.Entities.Product;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 

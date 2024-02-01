@@ -2,8 +2,8 @@ package PayGoal.demo.Controllers;
 import PayGoal.demo.Entities.Product;
 import PayGoal.demo.Services.ProductServicesImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -19,8 +19,16 @@ public class ProductController {
         return service.getProducts(sortBy,sortOrder);
     }
     @DeleteMapping("/api/product/{id}")
-    public void remove(@PathVariable String id){
+    public ResponseEntity remove(@PathVariable String id){
+    try{
         service.deleteProduct(Long.parseLong(id));
+        String Deleted = "Deleted " + id;
+        return ResponseEntity.ok(Deleted);
+    }
+       catch (Exception e){
+            String NotFound = "Source not found with id: "+ id;
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NotFound);
+       }
     }
     @PostMapping("/api/product")
     public void registerProduct(@RequestBody Product product){

@@ -2,8 +2,7 @@ package PayGoal.demo.Services;
 
 import PayGoal.demo.Entities.Product;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 
 import java.util.List;
 
