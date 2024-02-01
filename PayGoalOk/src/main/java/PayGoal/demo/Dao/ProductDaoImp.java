@@ -6,33 +6,52 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
 @Transactional
-public class ProductDaoImp implements productDao {
+public  class ProductDaoImp implements productDao {
+
     @PersistenceContext
     private EntityManager entityManager;
-    @Override
-    public List<Product> getProducts() {
-        return entityManager.createQuery("FROM Product", Product.class).getResultList();
+
+    public List<Product> getProducts( String sortBy, String sortOrder) {
+        String jpqlQuery = "SELECT p FROM Product p";
+        if (sortBy != null && !sortBy.isEmpty()) {
+            jpqlQuery += " ORDER BY";
+            if ("name".equalsIgnoreCase(sortBy)) {
+                jpqlQuery += " p.name";
+            } else {
+                jpqlQuery += " p." + sortBy;
+            }
+
+            // Agrega el orden (ASC o DESC) a la consulta
+            if ("desc".equalsIgnoreCase(sortOrder)) {
+                jpqlQuery += " DESC";
+            } else {
+                jpqlQuery += " ASC";
+            }
+        }
+        return entityManager.createQuery(jpqlQuery, Product.class).getResultList();
     }
 
-    @Override
+
     public void deleteProduct(Long id) {
         Product product = entityManager.find(Product.class,id);
         entityManager.remove(product);
     }
 
-    @Override
+
     public void registerProduct(Product product) {
     entityManager.persist(product);
     }
 
-    @Override
-    public Product getProductByIdAndUpdate(Long id, Product updatedProduct) {
+
+    public Product getProductByIdAndUpdate(Long id, Product updatedProduct)  {
         String query = "FROM Product WHERE id = :id";
         TypedQuery<Product> typedQuery = entityManager.createQuery(query, Product.class);
         typedQuery.setParameter("id", id);

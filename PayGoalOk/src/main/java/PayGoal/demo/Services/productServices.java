@@ -1,13 +1,16 @@
 package PayGoal.demo.Services;
 
 import PayGoal.demo.Entities.Product;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface productServices {
-    List<Product> getProducts();
+  List<Product> getProducts(String sortBy, String sortOrder);
     void deleteProduct(Long id);
-    void registerProduct(Product product);
+    void registerProduct(@Valid Product product);
 
-    Product getProductByIdAndUpdate(Long id, Product updatedProduct);
+    Product getProductByIdAndUpdate(@Valid Long id, Product updatedProduct) ;
 }
