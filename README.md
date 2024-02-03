@@ -55,7 +55,8 @@
   <br />
   <h3>Método Get Product by ID</h3>
   <p>Una vez identificado el ID utilizarlo con el siguiente endpoint:</p>
-  <p>http://localhost:8080/api/product/2</p>
+  <p>http://localhost:8080/api/product/id</p>
+ <p>Por ejemplo: http://localhost:8080/api/product/2</p>
 
   <br />
   <h3>Actualización de productos - Requiere ID</h3>
